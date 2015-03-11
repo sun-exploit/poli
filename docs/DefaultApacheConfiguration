@@ -1,0 +1,50 @@
+    Replace <server-ip> with the address of your server
+    Replace <pcsweb_base> with the directory you untarred pcsweb into
+    Replace <servername> with the DNS name of your server (eg. admin.example.com)
+
+    <VirtualHost <server-ip>:443>
+            SSLEngine on
+            ServerAdmin webmaster@localdomain
+            DocumentRoot <pcsweb_base>/html/
+            ServerName <servername>
+            ErrorLog <pcsweb_base>/logs/error.log
+            CustomLog <pcsweb_base>/logs/caccess.log combined
+
+            Alias /img/ <pcsweb_base>/html-aliases/img/
+            Alias /certs/ <pcsweb_base>/html-aliases/certs/
+            Alias /mods/ <pcsweb_base>/pcs_mods/
+
+            # Modify this to suit your security requirements
+            # The default configuration shown below will allow
+            # access from a trusted network without a password
+            # or from anywhere with a password.
+            #
+            # NOTE: This is only for HTTP access to the interface
+            # it does not replace the Configuration System's
+            # own authentication system.
+            <Location />
+                    Order deny,allow
+                    Deny from all
+                    allow from <trusted_network>/24
+                    AuthName "Network Administration"
+                    AuthType Basic
+                    # You will need to create this file with htpasswd
+                    AuthUserFile <pcsweb_base>/auth/pcsweb.passwd
+                    require valid-user
+                    Satisfy any
+            </Location>
+
+            php_value include_path ".:/usr/share/php:<pcsweb_base>/html:<pcsweb_base>/pcs_mods"
+    </VirtualHost>
+
+    # Ensure this host is only ever accessed via SSL
+    <VirtualHost *>
+            ServerAdmin webmaster@localdomain
+            DocumentRoot <pcsweb_base>/html/
+            ServerName <servername>
+            ErrorLog <pcsweb_base>/logs/error.log
+            CustomLog <pcsweb_base>/logs/caccess.log combined
+
+            RedirectPermanent / https://<servername>/
+    </VirtualHost>
+
