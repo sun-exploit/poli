@@ -46,9 +46,9 @@
 import sys
 
 # Look for the module in its default installation directory
-sys.path.append("server")
+sys.path.append("polid")
 
 # Start the server
-from server import pcsd
+from polid import pcsd
 if __name__ == "__main__":
     pcsd.start()

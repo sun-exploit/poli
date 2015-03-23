@@ -46,9 +46,10 @@
 import sys
 
 # Look for the module in its default installation directory
-sys.path.append("clients")
+sys.path.append("plugins")
+sys.path.append("modules")
 
 # Start the server
-from clients import pcsc
+from plugins import pcs
 if __name__ == "__main__":
-    pcsc.start()
+    pcs.start()
