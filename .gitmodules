@@ -1,6 +1,3 @@
-[submodule "poli_plugins"]
-	path = poli_plugins
-	url = git@github.com:sun-exploit/poli_plugins.git
 [submodule "plugins"]
 	path = plugins
 	url = git@github.com:sun-exploit/poli_plugins.git
